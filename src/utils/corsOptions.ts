@@ -1,4 +1,4 @@
-const allowedOrigins: string[] = ['*'];
+const allowedOrigins: string = '*';
 
 export const corsOptions = {
     origin: allowedOrigins,
