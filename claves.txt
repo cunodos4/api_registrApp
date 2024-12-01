@@ -1,0 +1,50 @@
+ "rut":"20001222-1", 
+  "primerNombre": "Juanin",
+  "segundoNombre,": "Juan",
+  "apellidoPaterno":"Harri",
+  "apellidoMaterno":"Harri",
+  "email": "ju.harri@duocuc.cl",
+  "contrasena": "Harri123#",
+  "rol": "ALUMNO"
+
+  "rut":"21355000-3", 
+  "primerNombre": "Lupita",
+  "segundoNombre": "Maria",
+  "apellidoPaterno":"Niongo",
+  "apellidoMaterno":"Luzero",
+  "email": "lu.niongo@duocuc.cl",
+  "contrasena": "Lupita123#",
+  "rol": "ALUMNO"
+
+
+  {
+  "rut":"1334400-3", 
+  "primerNombre": "Elsa",
+  "segundoNombre": null,
+  "apellidoPaterno":"Bloodstone",
+  "apellidoMaterno":"Clark",
+  "email": "els.bloodstone@profesor.duoc.cl",
+  "contrasena": "ElsaB333#",
+  "rol": "PROFESOR"
+}
+
+{
+  "rut":"1034400-3", 
+  "primerNombre": "Remi",
+  "segundoNombre": null,
+  "apellidoPaterno":"Lebau",
+  "apellidoMaterno":"Gambit",
+  "email": "re.Lebau@duocu.cl",
+  "contrasena": "Monami1422#",
+  "rol": "ALUMNO"
+}
+
+{
+    "rut": "7000033-k", 
+    "primerNombre": "Raul",
+    "apellidoPaterno":"Figueroa",
+    "apellidoMaterno": "Pesutic",
+    "email": "nombre.apellido@profesor.duoc.cl",
+    "contrasena": "Perro123#",
+    "rol":"PROFESOR" 
+}
