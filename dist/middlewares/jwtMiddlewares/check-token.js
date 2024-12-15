@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.reqToken = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const keys_1 = require("../../keys");
+const barrel_1 = require("../../barrel");
 const reqToken = (req, res, next) => {
     var _a;
     try {
@@ -15,7 +15,7 @@ const reqToken = (req, res, next) => {
         }
         ;
         token = token.split(" ")[1]; // Esto se hace para que en el jwt.verify pueda verificar el token
-        jsonwebtoken_1.default.verify(token, keys_1.JWT_SECRET);
+        jsonwebtoken_1.default.verify(token, barrel_1.JWT_SECRET);
         next();
     }
     catch (error) {

@@ -22,12 +22,20 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = require("express");
-const ramosCtrl = __importStar(require("../controllers/ramosControllers"));
-const barrel_1 = require("../barrel");
-const router = (0, express_1.Router)();
-router.post('/ramos/register', ramosCtrl.ramosRegister);
-router.get('/ramos/getAll', barrel_1.reqToken, ramosCtrl.getAllRamos);
-router.get('/ramos/:rut', barrel_1.reqToken, ramosCtrl.getRamosByUserId);
-exports.default = router;
+exports.generateJwt = void 0;
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const dotenv = __importStar(require("dotenv"));
+dotenv.config({ path: '.env' });
+const generateJwt = (userId) => {
+    const jw_secrtet = process.env.JWT_SECRET;
+    const token = jsonwebtoken_1.default.sign({
+        id: userId.id,
+        createAt: userId.createAt
+    }, jw_secrtet, { expiresIn: '8h' });
+    return token;
+};
+exports.generateJwt = generateJwt;

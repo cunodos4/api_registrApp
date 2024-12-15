@@ -12,10 +12,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUserById = exports.getAllUsers = exports.login = exports.signup = void 0;
-const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+exports.refreshTokens = exports.getUserById = exports.getAllUsers = exports.login = exports.signup = void 0;
 const dbConfig_1 = require("../db/dbConfig");
-const bcrypt_1 = require("../utils/bcrypt");
+const barrel_1 = require("../barrel");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config({ path: '.env' });
 const signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -25,7 +24,7 @@ const signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         var msg = 'El usuario ya existe.';
         throw new Error(msg);
     }
-    const newPassword = (0, bcrypt_1.encriptPassword)(contrasena);
+    const newPassword = (0, barrel_1.encriptPassword)(contrasena);
     usuario = yield dbConfig_1.prisma.usuario.create({
         data: {
             rut,
@@ -51,16 +50,13 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (!usuario) {
             throw Error('El usuario no existe.');
         }
-        const validPassword = yield (0, bcrypt_1.comparePassword)(contrasena, usuario.contrasena);
+        const validPassword = yield (0, barrel_1.comparePassword)(contrasena, usuario.contrasena);
         if (!validPassword) {
             throw Error('Contraseña incorrecta');
         }
         ;
-        const jw_secrtet = process.env.JWT_SECRET;
-        const token = jsonwebtoken_1.default.sign({
-            id: usuario.id,
-            createAt: usuario.createAt
-        }, jw_secrtet, { expiresIn: '1h' });
+        const token = (0, barrel_1.generateJwt)(usuario.id);
+        yield dbConfig_1.prisma.usuario.update({ where: { id: usuario.id }, data: { token: token } });
         res.json({
             id: usuario.id,
             nombre: `${usuario.primerNombre} ${usuario.apellidoPaterno}`,
@@ -94,3 +90,20 @@ const getUserById = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 exports.getUserById = getUserById;
+const refreshTokens = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.body;
+    const token = (0, barrel_1.refreshToken)(id);
+    yield dbConfig_1.prisma.usuario.update({
+        where: {
+            id: id
+        },
+        data: {
+            token: token
+        }
+    });
+    res.json({
+        msg: 'Todo ok',
+        code: 200
+    });
+});
+exports.refreshTokens = refreshTokens;

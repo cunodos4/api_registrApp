@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.isStuden = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const dbConfig_1 = require("../../db/dbConfig");
-const keys_1 = require("../../keys");
+const barrel_1 = require("../../barrel");
 const isStuden = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         let token = req.headers.authorization;
@@ -24,7 +24,7 @@ const isStuden = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
         }
         ;
         token = token.split(" ")[1];
-        const decode = jsonwebtoken_1.default.verify(token, keys_1.JWT_SECRET);
+        const decode = jsonwebtoken_1.default.verify(token, barrel_1.JWT_SECRET);
         const { id } = decode;
         const user = yield dbConfig_1.prisma.usuario.findUnique({
             where: {

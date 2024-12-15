@@ -22,12 +22,19 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = require("express");
-const ramosCtrl = __importStar(require("../controllers/ramosControllers"));
-const barrel_1 = require("../barrel");
-const router = (0, express_1.Router)();
-router.post('/ramos/register', ramosCtrl.ramosRegister);
-router.get('/ramos/getAll', barrel_1.reqToken, ramosCtrl.getAllRamos);
-router.get('/ramos/:rut', barrel_1.reqToken, ramosCtrl.getRamosByUserId);
-exports.default = router;
+exports.refreshToken = void 0;
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const dotenv = __importStar(require("dotenv"));
+dotenv.config({ path: '.env' });
+const refreshToken = (userId) => {
+    const jw_secret = process.env.REFRESH_TOKEN_SECRET;
+    const refreshToken = jsonwebtoken_1.default.sign({ id: userId.id }, // Información mínima
+    jw_secret, { expiresIn: '1d' } // Duración más larga
+    );
+    return refreshToken;
+};
+exports.refreshToken = refreshToken;

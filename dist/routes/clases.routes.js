@@ -25,10 +25,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const ctrClases = __importStar(require("../controllers/clasesControllers"));
-const check_token_1 = require("../middlewares/jwtMiddlewares/check-token");
-const isStudent_1 = require("../middlewares/RolMiddlewares/isStudent");
+const barrel_1 = require("../barrel");
 const router = (0, express_1.Router)();
-router.post('/clases/register', check_token_1.reqToken, ctrClases.clasesRegister);
-router.get('/clases/:userId/:ramoId', check_token_1.reqToken, ctrClases.getByUserIdAndRamoID);
-router.put('/clases/update/:rut/:idFecha', [check_token_1.reqToken, isStudent_1.isStuden], ctrClases.updateAsistencia);
+router.post('/clases/register', barrel_1.reqToken, ctrClases.clasesRegister);
+router.get('/clases/:userId/:ramoId', barrel_1.reqToken, ctrClases.getByUserIdAndRamoID);
+router.put('/clases/update/:rut/:idFecha', [barrel_1.reqToken, barrel_1.isStuden], ctrClases.updateAsistencia);
 exports.default = router;
