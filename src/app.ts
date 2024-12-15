@@ -19,4 +19,6 @@ app.use(morgan("dev"));
 
 app.use(cors(corsOptions));
 app.use('/api', limiter, userRoutes, ramosRoutes, clasesRoutes);
-app.listen(PORT);
+app.listen(PORT, ()=>{
+    msg: `El servidor está corriendo en el Port:${PORT}`
+});
