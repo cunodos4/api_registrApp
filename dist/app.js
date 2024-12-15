@@ -1,0 +1,23 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.app = void 0;
+const express_1 = __importDefault(require("express"));
+const helmet_1 = __importDefault(require("helmet"));
+const morgan_1 = __importDefault(require("morgan"));
+const cors_1 = __importDefault(require("cors"));
+const keys_1 = require("./keys");
+const limiter_1 = require("./utils/limiter");
+const corsOptions_1 = require("./utils/corsOptions");
+const user_routes_1 = __importDefault(require("./routes/user.routes"));
+const ramos_routes_1 = __importDefault(require("./routes/ramos.routes"));
+const clases_routes_1 = __importDefault(require("./routes/clases.routes"));
+exports.app = (0, express_1.default)();
+exports.app.use(express_1.default.json());
+exports.app.use((0, helmet_1.default)());
+exports.app.use((0, morgan_1.default)("dev"));
+exports.app.use((0, cors_1.default)(corsOptions_1.corsOptions));
+exports.app.use('/api', limiter_1.limiter, user_routes_1.default, ramos_routes_1.default, clases_routes_1.default);
+exports.app.listen(keys_1.PORT);
