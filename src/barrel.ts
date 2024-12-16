@@ -11,9 +11,11 @@ import { corsOptions } from './utils/corsOptions';
 import { generateJwt } from  './utils/generateJwt';
 import { refreshToken } from './utils/refreshJwt';
 import { limiter } from './utils/limiter';
+import { generateResetToken } from './utils/mailerTokenGenerator';
+import { sendResetEmail } from './utils/sendMaile';
+import { verifyJwt } from './utils/decodeJwt';
 
-
-dotenv.config({path:'.env'})
+dotenv.config({path: '.env'})
 
 
 const PORT = process.env.PORT as string;
@@ -34,5 +36,8 @@ export  {
     userSchema,
     loginSchema,
     isStuden,
-    isTeacher
+    isTeacher,
+    generateResetToken,
+    sendResetEmail, 
+    verifyJwt
 };

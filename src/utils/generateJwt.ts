@@ -8,7 +8,7 @@ export const generateJwt = (userId: any )=>{
     
     const token = jwt.sign({
             id: userId.id,
-            createAt: userId.createAt
+            email: userId.email
         }, 
         jw_secrtet,
         {expiresIn: '8h'}

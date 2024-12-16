@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { prisma } from '../db/dbConfig';
-import { encriptPassword, comparePassword, generateJwt, refreshToken } from '../barrel';
+import { encriptPassword, comparePassword, generateJwt, refreshToken, 
+    generateResetToken, sendResetEmail, verifyJwt } from '../barrel';
 
 import dotenv from 'dotenv';
 
@@ -104,4 +105,59 @@ export const refreshTokens = async (req: Request, res: Response ) =>{
         msg: 'Todo ok',
         code: 200
     });
+};
+
+
+export const resetMail = async (req: Request, res: Response) =>{
+    const { email } = req.body;
+    try {
+        const usuario =  await prisma.usuario.findUnique({where: {
+            email: email
+        }});
+    
+        if(!usuario){
+            res.status(404).json('Error: no existe el usuario');
+        };
+
+        const usuarioId: string | undefined = usuario?.id.toString();
+        const token = generateResetToken(usuarioId);
+
+       
+
+        await sendResetEmail( usuario?.email as string, token as string);
+
+        res.json('Enviado');
+
+    
+    } catch (error) {
+        if(error as typeof Error){
+            res.send({
+                error: 'Error'
+            })
+        }        
+    }
+};
+
+
+export const resetPassword = async ( req: Request, res: Response ) => {
+    const { newPassword , token } = req.body;
+
+    try {
+        
+        const decode: any = verifyJwt(token);
+
+        await prisma.usuario.update({
+            where:{
+                email: decode.email
+            }, 
+            data:{
+                contrasena: newPassword
+            }
+            
+        });
+
+    } catch (error) {
+        res.status(404).json({msg: `Error: ${error}`})
+    }
+
 };
