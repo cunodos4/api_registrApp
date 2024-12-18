@@ -47,6 +47,8 @@ export const getAllRamos = async (_req: Request, res: Response)=>{
     res.json(data);
 };
 
+
+
 export const getRamosByUserId = async (req: Request, res: Response)=>{
     const { rut }= req.params;
     const usuario = await prisma.usuario.findUnique({

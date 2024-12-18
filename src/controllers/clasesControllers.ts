@@ -46,7 +46,10 @@ export const getByUserIdAndRamoID = async (req: Request, res: Response)=>{
 
    try {
     const usuario = await prisma.usuario.findMany({
-        where: { id:Number(userId),},
+        where: { id:Number(userId),}, select: {
+            primerNombre: true,
+            apellidoPaterno: true,
+        }
     });
 
 
@@ -68,6 +71,12 @@ export const getByUserIdAndRamoID = async (req: Request, res: Response)=>{
             ramoId: Number(ramoId)
         },
         select: {
+            usuario:{
+                select:{
+                    primerNombre: true,
+                    apellidoPaterno: true
+                }
+            },
             fecha: true,
             asistencia: true,
         }

@@ -48,3 +48,14 @@
     "contrasena": "Perro123#",
     "rol":"PROFESOR" 
 }
+
+
+{
+    "rut": "00000000-k", 
+    "primerNombre": "Profesor",
+    "apellidoPaterno":"De",
+    "apellidoMaterno": "Prubea",
+    "email": "profesor.de.prueba@profesor.duoc.cl",
+    "contrasena": "Profesor10#",
+    "rol":"PROFESOR" 
+}
